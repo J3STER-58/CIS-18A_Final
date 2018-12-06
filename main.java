@@ -26,7 +26,6 @@ public class JavaApplication1 {
     public static void menu(Scanner input, Vector <Painting> p, Vector <Sculpture> s) {
         char choice = ' '; 
         do {
-            System.out.flush();
             System.out.println("\n --- Welcome to the SAX1JOHNO Art Museum ---");
             System.out.println(" --- We have a library of Painting and of Scultpures ---");
             System.out.println(" --- Which Library would you like to access? ---");
@@ -59,7 +58,6 @@ public class JavaApplication1 {
     public static void menuPainting(Scanner input, Vector <Painting> p) {
         int choice = 0;       
         do {
-            System.out.flush();
             System.out.println("\n --- Painting Library ---");
             System.out.println(" --- You have #" + p.size() + " paintings in your library. ---");
             System.out.println(" --- What would you like to do? ---");
@@ -70,13 +68,12 @@ public class JavaApplication1 {
             System.out.println("5) Press '5' to return to Main Menu.");
             System.out.print("   Enter your choice :  ");
             choice = input.nextInt();
-            choice = Character.toLowerCase(choice);
             
             if (choice == 1) {
                 if (!isFull(p)) {
                     
                 } else {
-                    System.out.println("\nThere is no more room for new Paintings.");
+                    System.out.println("\nThere is no more room to add new Paintings.");
                     System.out.println("Delete a Painting to add another.\n");
                 }
             }
@@ -84,14 +81,14 @@ public class JavaApplication1 {
                 if (!isEmpty(p)) {
                     deletePainting(input, p);
                 } else {
-                   System.out.println("\nThere are no Paintings in the library.\n");  
+                   System.out.println("\nThere are no Paintings in the library to delete.\n");  
                 }
             }
             else if (choice == 3) {
                 if (!isEmpty(p)) {
                     
                 } else {
-                    System.out.println("\nThere are no Paintings in the library.\n"); 
+                    System.out.println("\nThere are no Paintings in the library to edit.\n"); 
                 }
             }
             else if (choice == 4) {
@@ -100,7 +97,7 @@ public class JavaApplication1 {
                         p.elementAt(i).showArt();
                     }
                 } else {
-                   System.out.println("\nThere are no Paintings in the library.\n"); 
+                   System.out.println("\nThere are no Paintings in the library to display.\n"); 
                 }
             }
             else if (choice == 5) {
@@ -110,7 +107,6 @@ public class JavaApplication1 {
                 System.out.println("Invalid Entry!.");
                 System.out.print("Enter your choice :  ");
                 choice = input.nextInt();
-                choice = Character.toLowerCase(choice);
             }
         } while (choice != 5);
         
@@ -120,7 +116,6 @@ public class JavaApplication1 {
     public static void menuSculpture(Scanner input, Vector <Sculpture> s) {
         int choice = 0;       
         do {
-            System.out.flush();
             System.out.println("\n --- Sculpture Library ---");
             System.out.println(" --- You have #" + s.size() + " Sculptures in your library. ---");
             System.out.println(" --- What would you like to do? ---");
@@ -137,22 +132,22 @@ public class JavaApplication1 {
                 if (!isFull(s)) {
                     
                 } else {
-                    System.out.println("\nThere is no more room for new Sculptures.");
+                    System.out.println("\nThere is no more room to add new Sculptures.");
                     System.out.println("Delete a Sculpture to add another.\n");
                 }
             }
             else if (choice == 2) {
                 if (!isEmpty(s)) {
-                    
+                    deleteSculpture(input,s);
                 } else {
-                   System.out.println("\nThere are no Sculptures in the library.\n");  
+                   System.out.println("\nThere are no Sculptures in the library to delete.\n");  
                 }
             }
             else if (choice == 3) {
                 if (!isEmpty(s)) {
                     
                 } else {
-                    System.out.println("\nThere are no Sculptures in the library.\n"); 
+                    System.out.println("\nThere are no Sculptures in the library to edit.\n"); 
                 }
             }
             else if (choice == 4) {
@@ -161,7 +156,7 @@ public class JavaApplication1 {
                         s.elementAt(i).showArt();
                     }
                 } else {
-                   System.out.println("\nThere are no Sculptures in the library.\n"); 
+                   System.out.println("\nThere are no Sculptures in the library to display.\n"); 
                 }
             }
             else if (choice == 5) {
@@ -171,7 +166,6 @@ public class JavaApplication1 {
                 System.out.println("Invalid Entry!.");
                 System.out.print("Enter your choice :  ");
                 choice = input.nextInt();
-                choice = Character.toLowerCase(choice);
             }
         } while (choice != 5);
         
@@ -180,20 +174,74 @@ public class JavaApplication1 {
     
     public static void deletePainting(Scanner input, Vector <Painting> p) {
         int i = 0;
-        String paintingNum = " ";
+        String paintingID = " ";
         
         do {
-        System.out.println("Here are the Paintings in the Library.\n");
-        for (i = 0; i < p.size(); i++) {
-            System.out.println("\n --- Painting #" + (i+1) + " --- ");
-            p.elementAt(i).showArt();
-        } 
-        System.out.println("\nEnter the ID of the Painting you want to delete.");
-        System.out.print("Painting ID :  ");
-        paintingNum = input.nextLine();
-        } while (paintingNum != p.elementAt(i).getID());
+            char choice = ' ';
+            System.out.println("Here are the Paintings in the Library.\n");
+            for (i = 0; i < p.size(); i++) {
+                System.out.println("\n --- Painting #" + (i+1) + " --- ");
+                p.elementAt(i).showArt();
+            } 
+            System.out.println("\nEnter the ID of the Painting you want to delete.");
+            System.out.print("Painting ID :  ");
+            paintingID = input.nextLine();
+            do {
+                System.out.println("\nAre you sure you want to delete Painting :  " + p.elementAt(i).getID());
+                System.out.println("Press 'Y' for yes or 'N' for no.");
+                System.out.print("   Enter your choice :  ");
+                choice = input.next().charAt(0);
+                choice = Character.toLowerCase(choice);
+                if (choice == 'y') {
+                    p.remove(paintingID); 
+                }
+                else if (choice == 'n'){
+                    return;
+                }
+                else if (choice != 'y' && choice != 'n') {
+                    System.out.println("Invalid Entry!.");
+                    System.out.print("Enter your choice :  ");
+                    choice = input.next().charAt(0);
+                    choice = Character.toLowerCase(choice);
+                }
+            } while (choice != 'y' || choice != 'n');
+        } while (paintingID != p.elementAt(i).getID());
+    }
+    
+    public static void deleteSculpture(Scanner input, Vector <Sculpture> s) {
+        int i = 0;
+        String sculptureID = " ";
         
-        p.remove(paintingNum);
+        do {
+            char choice = ' ';
+            System.out.println("Here are the Sculpturess in the Library.\n");
+            for (i = 0; i < s.size(); i++) {
+                System.out.println("\n --- Sculpture #" + (i+1) + " --- ");
+                s.elementAt(i).showArt();
+            } 
+            System.out.println("\nEnter the ID of the Painting you want to delete.");
+            System.out.print("Painting ID :  ");
+            sculptureID = input.nextLine();
+            do {
+                System.out.println("\nAre you sure you want to delete Painting :  " + s.elementAt(i).getID());
+                System.out.println("Press 'Y' for yes or 'N' for no.");
+                System.out.print("   Enter your choice :  ");
+                choice = input.next().charAt(0);
+                choice = Character.toLowerCase(choice);
+                if (choice == 'y') {
+                    s.remove(sculptureID); 
+                }
+                else if (choice == 'n'){
+                    return;
+                }
+                else if (choice != 'y' && choice != 'n') {
+                    System.out.println("Invalid Entry!.");
+                    System.out.print("Enter your choice :  ");
+                    choice = input.next().charAt(0);
+                    choice = Character.toLowerCase(choice);
+                }
+            } while (choice != 'y' || choice != 'n');
+        } while (sculptureID != s.elementAt(i).getID());
     }
     
     public static boolean isFull(Vector std) {
@@ -204,4 +252,3 @@ public class JavaApplication1 {
         return (std.size() == 0);
     }
 }
-

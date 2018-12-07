@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 /**
  *
  * @author ncc
@@ -31,6 +32,7 @@ public class JavaApplication1 {
         Vector <Sculpture> s = new Vector <Sculpture> ();
         
         // Call Menu
+        load(p,s);
         menu(input,p,s);   
     }
     
@@ -72,6 +74,21 @@ public class JavaApplication1 {
                 // File Exception Jarble...
                 try {
                     read = new FileReader(library);
+                    try {
+                        System.out.println("Created new file called library.txt.");
+                        FileWriter writer = null;
+                        writer = new FileWriter("library.txt");
+                        BufferedWriter out = new BufferedWriter(writer);
+                        
+                        for (int i = 0; i < p.size(); i++) {
+                            out.write(p.get(i).toCSV());
+                        }
+                        
+                        out.close();
+                
+                    } catch (IOException ex2) {
+                        System.out.println(" --- FILE ERROR --- ");
+                    }
                 } catch (FileNotFoundException ex) {
                     try {
                         System.out.println("Created new file called library.txt.");
@@ -337,6 +354,36 @@ public class JavaApplication1 {
     
     public static boolean isEmpty(Vector std) {
         return (std.size() == 0);
+    }
+
+    private static void load( Vector <Painting> p, Vector <Sculpture> s) {
+        File library = new File("library.txt");
+                FileReader read = null;
+                
+                // File Exception Jarble...
+                try {
+                    read = new FileReader(library);
+                     BufferedReader br = new BufferedReader(read);
+        
+                    String line = null;
+                    try {
+                    // Read a line from the buffered reader
+                    // and put that line into the "LINE" string.
+                    // becomes null when readLine runs out of lines to read
+                    while ((line = br.readLine()) != null) {
+                        Painting paint = new Painting();
+                        paint.fromCSV(line);
+                        p.add(paint);
+                        
+                        
+                    }
+        } catch (IOException ex) {
+            System.out.println("Binary files are not supported");
+        }
+                } catch (FileNotFoundException ex) {
+                    
+                    
+                }
     }
 
     

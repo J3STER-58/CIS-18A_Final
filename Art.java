@@ -22,4 +22,18 @@ public class Art {
                 + "\nArtist: " + artist + "\nGenre: " + genre 
                 + "\nYear: " + year + "\nPrice: $" + price + "\n\n");
     }
+    
+    public void fromCSV (String CSV) {
+        String[] arrOfStr = CSV.split(",");
+        this.id = arrOfStr[0];
+        this.title = arrOfStr[1];
+        this.artist = arrOfStr[2];
+        this.genre = arrOfStr[3];
+        this.year = Integer.parseInt(arrOfStr[4]);
+        this.price = Double.parseDouble(arrOfStr[5]);
+    }
+    
+    public String toCSV() {
+        return this.id + "," + this.title + "," + this.artist + "," + this.genre + "," + this.year + "," + this.price + "\n";
+    }
 }

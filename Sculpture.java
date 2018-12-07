@@ -99,4 +99,23 @@ public class Sculpture extends Art {
                 + "\nGenre: " + genre + "\nYear: " + year 
                 + "\nPrice: $" + price + "\n\n");
     }
+    
+    
+    @Override
+    public void fromCSV (String CSV) {
+        String[] arrOfStr = CSV.split(",");
+        this.id = arrOfStr[0];
+        this.title = arrOfStr[1];
+        this.artist = arrOfStr[2];
+        this.material = arrOfStr[3];
+        this.genre = arrOfStr[4];
+        this.year = Integer.parseInt(arrOfStr[5]);
+        this.price = Double.parseDouble(arrOfStr[6]);
+    }
+    
+    
+    @Override
+    public String toCSV() {
+        return this.id + "," + this.title + "," + this.artist + "," + this.material + "," + this.genre + "," + this.year + "," + this.price + "\n";
+    }
 }

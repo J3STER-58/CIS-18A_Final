@@ -32,7 +32,7 @@ public class JavaApplication1 {
         Vector <Sculpture> s = new Vector <Sculpture> ();
         
         // Call Menu
-        load(p,s);
+        loadPainting(p);
         menu(input,p,s);   
     }
     
@@ -356,35 +356,25 @@ public class JavaApplication1 {
         return (std.size() == 0);
     }
 
-    private static void load( Vector <Painting> p, Vector <Sculpture> s) {
+    private static void loadPainting(Vector <Painting> p) {
         File library = new File("library.txt");
-                FileReader read = null;
+        FileReader read = null;
                 
-                // File Exception Jarble...
-                try {
-                    read = new FileReader(library);
-                     BufferedReader br = new BufferedReader(read);
+        // File Exception Jarble...
+        try {
+            read = new FileReader(library);
+            BufferedReader br = new BufferedReader(read);
         
-                    String line = null;
-                    try {
-                    // Read a line from the buffered reader
-                    // and put that line into the "LINE" string.
-                    // becomes null when readLine runs out of lines to read
-                    while ((line = br.readLine()) != null) {
-                        Painting paint = new Painting();
-                        paint.fromCSV(line);
-                        p.add(paint);
-                        
-                        
-                    }
-        } catch (IOException ex) {
+            String line = null;
+            try {
+                while ((line = br.readLine()) != null) {
+                    Painting paint = new Painting();
+                    paint.fromCSV(line);
+                    p.add(paint);  
+                  }
+            } catch (IOException ex) {
             System.out.println("Binary files are not supported");
-        }
-                } catch (FileNotFoundException ex) {
-                    
-                    
-                }
+            }
+        } catch (FileNotFoundException ex) {}
     }
-
-    
 }
